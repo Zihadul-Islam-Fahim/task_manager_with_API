@@ -5,7 +5,7 @@ import 'package:task_manager_1/Data/networkCaller/NetworkResponse.dart';
 import 'package:task_manager_1/Screens/TaskScreens/BottomSheetScreen.dart';
 import 'package:task_manager_1/Widget/ProfileSummaryCard.dart';
 import 'package:task_manager_1/Widget/SnackBar.dart';
-
+import 'package:task_manager_1/Widget/bodyBackground.dart';
 import '../../Data/utility/Url.dart';
 
 class AddNewTask extends StatefulWidget {
@@ -32,63 +32,65 @@ class _AddNewTaskState extends State<AddNewTask> {
             children: [
               const ProfileSummeryCard(),
               Expanded(
-                  child: SingleChildScrollView(
+                  child: bodyBackground(
+                    child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Add New Task',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      TextFormField(
-                        controller: _titleTEController,
-                        validator: (String? value) {
-                          if (value!.isEmpty) {
-                            return ' Enter title';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(hintText: 'Title'),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      TextFormField(
-                        controller: _descriptionTEController,
-                        validator: (String? value) {
-                          if (value!.isEmpty) {
-                            return ' Enter Discription';
-                          }
-                          return null;
-                        },
-                        maxLines: 8,
-                        decoration:
-                            const InputDecoration(hintText: 'Description'),
-                      ),
-                      const SizedBox(
-                        height: 14,
-                      ),
-                      Visibility(
-                        visible: loading == false,
-                        replacement: const Center(
-                          child: CircularProgressIndicator(),
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Add New Task',
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
-                        child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                createTask();
-                              }
-                            },
-                            child: const Icon(Icons.arrow_forward_ios_rounded)),
-                      ),
-                    ],
-                  ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        TextFormField(
+                          controller: _titleTEController,
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
+                              return ' Enter title';
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(hintText: 'Title'),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        TextFormField(
+                          controller: _descriptionTEController,
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
+                              return ' Enter Discription';
+                            }
+                            return null;
+                          },
+                          maxLines: 8,
+                          decoration:
+                              const InputDecoration(hintText: 'Description'),
+                        ),
+                        const SizedBox(
+                          height: 14,
+                        ),
+                        Visibility(
+                          visible: loading == false,
+                          replacement: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  createTask();
+                                }
+                              },
+                              child: const Icon(Icons.arrow_forward_ios_rounded)),
+                        ),
+                      ],
+                    ),
                 ),
-              ))
+              ),
+                  ))
             ],
           ),
         ),

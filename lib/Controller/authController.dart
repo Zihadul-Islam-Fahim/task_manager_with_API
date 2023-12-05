@@ -8,6 +8,9 @@ class AuthController {
 
 
   static Future<void> saveUserInformation(String t, UserModel model) async {
+
+    model = _checkUserPhoto(model);
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('token', t);
     await sharedPreferences.setString('user', jsonEncode(model.toJson()));
@@ -17,6 +20,7 @@ class AuthController {
   }
 
   static Future<void> updateUserInformation( UserModel model) async {
+    model = _checkUserPhoto(model);
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('user', jsonEncode(model.toJson()));
     user = model;
@@ -56,4 +60,15 @@ class AuthController {
     await sharedPreferences.clear();
     token = null;
   }
+
+ static UserModel _checkUserPhoto(UserModel model){
+    if (model.photo != null && model.photo!.startsWith('data:image')) {
+     //remove prefix
+      model.updatePhoto( model.photo!.replaceFirst(RegExp(r'data:image/[^;]+;base64,'), '')) ;
+
+    }
+    return model;
+  }
+
 }
+

@@ -12,7 +12,9 @@ class UserModel {
     _mobile = mobile;
     _photo = photo;
   }
-
+  updatePhoto(String data){
+    _photo =data;
+  }
   UserModel.fromJson(dynamic json) {
     _email = json['email'];
     _firstName = json['firstName'];

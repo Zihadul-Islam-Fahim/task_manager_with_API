@@ -20,7 +20,7 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   bool loading = false;
-  String photoInBase64 = '';
+  String? photoInBase64 ;
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _firstNameTEController = TextEditingController();
   final TextEditingController _lastNameTEController = TextEditingController();
@@ -36,6 +36,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       "firstName": _firstNameTEController.text.trim(),
       "lastName": _lastNameTEController.text.trim(),
       "mobile": _mobileTEController.text.trim(),
+      "photo": ""
     };
     if (_passwordTEController.text.isNotEmpty) {
       inputData["password"] = _passwordTEController.text;
@@ -54,12 +55,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         await NetworkCaller().postRequest(Urls.profileUpdate, body: inputData);
 
     if (mounted && response.isSuccess) {
-      AuthController.updateUserInformation(UserModel(
+      await AuthController.updateUserInformation(UserModel(
           email: _emailTEController.text.trim(),
           firstName: _firstNameTEController.text.trim(),
           lastName: _lastNameTEController.text.trim(),
           mobile: _mobileTEController.text.trim(),
-          photo: photoInBase64));
+          photo: photoInBase64  ?? AuthController.user!.photo ));
       mySnackbar(context, 'Profile Updated');
       setState(() {
         loading = false;
